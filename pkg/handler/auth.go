@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/ruslan1234fshhdhg/todo-app"
 )
+
 // @Summary SignUp
 // @Tags auth
 // @Description create account
@@ -22,7 +23,7 @@ func (h *Handler) signUp(c *gin.Context) {
 	// Handle user sign-up logic here
 	var input todo.User
 	if err := c.BindJSON(&input); err != nil {
-		newErrorResponse(c, http.StatusBadRequest, err.Error())
+		newErrorResponse(c, http.StatusBadRequest, "invalid input body")
 		return
 	}
 	id, err := h.services.Authorization.CreateUser(input)
@@ -39,6 +40,7 @@ type signInInput struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
+
 // @Summary SignIn
 // @Tags auth
 // @Description login
